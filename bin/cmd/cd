@@ -1,0 +1,4 @@
+#!/bin/bash
+
+PROJECT_ROOT=$(cd $(dirname $0)/../../; pwd)
+echo cd ${PROJECT_ROOT}

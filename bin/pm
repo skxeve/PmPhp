@@ -1,0 +1,37 @@
+#!/bin/bash
+
+usage_exit() {
+    echo "Usage: pm [ -a <path to app.yaml> ] command"
+    echo commands:
+    find $(dirname $0)/cmd/ -type f -perm 755 | xargs -L1 -I{} basename {} | grep -v pm | xargs -L1 -I{} printf "\t{}\n"
+    exit 1
+}
+
+
+while getopts h OPT
+do
+    case $OPT in
+        h)  usage_exit
+            ;;
+        \?)  usage_exit
+            ;;
+    esac
+done
+
+shift $((OPTIND - 1))
+CMD=$1
+shift
+
+PROJECT_ROOT=$(dirname $(dirname $0))
+if pwd | egrep -q "^${PROJECT_ROOT}"; then
+    cd ${PROJECT_ROOT}
+elif [ "${CMD}" != "cd" ]; then
+    echo "Not in working directory."
+    exit 1
+fi
+
+if [ -f $(dirname $0)/cmd/$CMD ]; then
+    $(dirname $0)/cmd/$CMD $*
+else
+    usage_exit
+fi

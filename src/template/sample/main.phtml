@@ -1,0 +1,11 @@
+<main class="container p-3 m-5">
+<h1 class="text-center">Hello PM PHP!</h1>
+<div class="alert alert-info p-2 m-1">
+Good Afternoon!
+</div>
+<?php if (isset($this->dump)):?>
+  <pre>
+    <?= $this->dump ?>
+  </pre>
+<?php endif;?>
+</main>
